@@ -1,8 +1,8 @@
 import Joi, { ObjectSchema } from 'joi';
 import { NextFunction, Response, Request } from 'express';
 import Logging from '../library/Logging';
-import { IAuthor } from '../models/Author';
-import { IBook } from '../models/Book';
+import { IUser } from '../models/User';
+import { IProduct } from '../models/Product';
 
 export const ValidateSchema = (schema: ObjectSchema) => {
     return async (req: Request, res: Response, next: NextFunction) => {
@@ -18,28 +18,30 @@ export const ValidateSchema = (schema: ObjectSchema) => {
 };
 
 export const Schemas = {
-    author: {
-        create: Joi.object<IAuthor>({
-            name: Joi.string().required()
+    user: {
+        create: Joi.object<IUser>({
+            username: Joi.string().required(),
+            email: Joi.string().required(),
+            password: Joi.string().required()
         }),
-        update: Joi.object<IAuthor>({
-            name: Joi.string().required()
+        update: Joi.object<IUser>({
+            username: Joi.string().required(),
+            email: Joi.string().required(),
+            password: Joi.string().required()
         })
     },
-    book: {
-        create: Joi.object<IBook>({
-            author: Joi.string()
-                .regex(/^[0-9a-fA-F]{24}/)
-                .required(),
-            title: Joi.string().required(),
-            category: Joi.string().required()
+    product: {
+        create: Joi.object<IProduct>({
+            name: Joi.string().required(),
+            description: Joi.string().required(),
+            price: Joi.number().required(),
+            units: Joi.number().required()
         }),
-        update: Joi.object<IBook>({
-            author: Joi.string()
-                .regex(/^[0-9a-fA-F]{24}/)
-                .required(),
-            title: Joi.string().required(),
-            category: Joi.string().required()
+        update: Joi.object<IProduct>({
+            name: Joi.string().required(),
+            description: Joi.string().required(),
+            price: Joi.number().required(),
+            units: Joi.number().required()
         })
     }
 };
