@@ -28,7 +28,7 @@ const readUser = (req: Request, res: Response, next: NextFunction) => {
 
 const readAll = (req: Request, res: Response, next: NextFunction) => {
     return User.find()
-        .then((users) => res.status(200).json({ users }))
+        .then((users) => res.status(200).json( users ))
         .catch((error) => res.status(500).json({ error }));
 };
 
