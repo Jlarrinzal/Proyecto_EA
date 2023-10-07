@@ -22,7 +22,7 @@ const readUser = (req: Request, res: Response, next: NextFunction) => {
     const userId = req.params.userId;
 
     return User.findById(userId)
-        .then((user) => (user ? res.status(200).json({ user }) : res.status(404).json({ message: 'not found' })))
+        .then((user) => (user ? res.status(200).json( user ) : res.status(404).json({ message: 'not found' })))
         .catch((error) => res.status(500).json({ error }));
 };
 
@@ -55,7 +55,7 @@ const deleteUser = (req: Request, res: Response, next: NextFunction) => {
     const userId = req.params.userId;
 
     return User.findByIdAndDelete(userId)
-        .then((user) => (user ? res.status(201).json({ user, message: 'Deleted' }) : res.status(404).json({ message: 'not found' })))
+        .then((user) => (user ? res.status(201).json( user ) : res.status(404).json({ message: 'not found' })))
         .catch((error) => res.status(500).json({ error }));
 };
 
