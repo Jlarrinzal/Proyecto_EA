@@ -15,7 +15,7 @@ const createProduct = (req: Request, res: Response, next: NextFunction) => {
 
     return product
         .save()
-        .then((product) => res.status(201).json({ product }))
+        .then((product) => res.status(201).json(product ))
         .catch((error) => res.status(500).json({ error }));
 };
 
@@ -23,18 +23,18 @@ const readProduct = (req: Request, res: Response, next: NextFunction) => {
     const productId = req.params.productId;
 
     return Product.findById(productId)
-        .then((product) => (product ? res.status(200).json({ product }) : res.status(404).json({ message: 'not found' })))
+        .then((product) => (product ? res.status(200).json( product ) : res.status(404).json({ message: 'not found' })))
         .catch((error) => res.status(500).json({ error }));
 };
 
 const readAll = (req: Request, res: Response, next: NextFunction) => {
     return Product.find()
-        .then((product) => res.status(200).json({ product }))
+        .then((product) => res.status(200).json( product ))
         .catch((error) => res.status(500).json({ error }));
 };
 
 const updateProduct = (req: Request, res: Response, next: NextFunction) => {
-    const productId = req.params.userId;
+    const productId = req.params.productId;
 
     return Product.findById(productId)
         .then((product) => {
