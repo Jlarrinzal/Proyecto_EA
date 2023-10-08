@@ -1,4 +1,5 @@
 import mongoose, { Document, Schema } from 'mongoose';
+import {mongoosePagination, Pagination} from 'mongoose-paginate-ts';
 
 export interface IProduct {
     name: string;
@@ -21,4 +22,5 @@ const ProductSchema: Schema = new Schema(
     }
 );
 
-export default mongoose.model<IProductModel>('Product', ProductSchema);
+ProductSchema.plugin(mongoosePagination);
+export default mongoose.model<IProductModel, Pagination<IProductModel>>('Product', ProductSchema);
