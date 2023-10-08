@@ -1,4 +1,5 @@
 import mongoose, { Document, ObjectId, Schema } from 'mongoose';
+import {mongoosePagination, Pagination} from 'mongoose-paginate-ts';
 
 export interface IUser {
     username: string;
@@ -19,4 +20,5 @@ const UserSchema: Schema = new Schema(
     }
 );
 
-export default mongoose.model<IUserModel>('User', UserSchema);
+UserSchema.plugin(mongoosePagination);
+export default mongoose.model<IUserModel, Pagination<IUserModel>>('User', UserSchema);

@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import mongoose from 'mongoose';
 import User from '../models/User';
+import {mongoosePagination, PaginationOptions } from 'mongoose-paginate-ts';
+
 
 const createUser = (req: Request, res: Response, next: NextFunction) => {
     const { username, email, password } = req.body;
@@ -27,8 +29,13 @@ const readUser = (req: Request, res: Response, next: NextFunction) => {
 };
 
 const readAll = (req: Request, res: Response, next: NextFunction) => {
-    return User.find()
-        .then((users) => res.status(200).json( users ))
+    const page = req.query.page ? parseInt(req.query.page as string, 10) : 1; 
+    const options: PaginationOptions = {
+        page,
+        limit: 3
+    };
+    return User.paginate(options)
+        .then((result) => res.status(200).json(result))
         .catch((error) => res.status(500).json({ error }));
 };
 
