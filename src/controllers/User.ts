@@ -2,18 +2,23 @@ import { NextFunction, Request, Response } from 'express';
 import mongoose from 'mongoose';
 import User from '../models/User';
 import {mongoosePagination, PaginationOptions } from 'mongoose-paginate-ts';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 
+const SIGNATURE = process.env.SIGNATURE || '';
 
-const createUser = (req: Request, res: Response, next: NextFunction) => {
-    const { username, email, password } = req.body;
+const createUser = async (req: Request, res: Response, next: NextFunction) => {
+    const { username, email, password, rol } = req.body;
 
     const user = new User({
         _id: new mongoose.Types.ObjectId(),
         username,
         email,
-        password
+        password,
+        rol
     });
 
+    user.password = await user.encryptPassword(user.password);
     return user
         .save()
         .then((user) => res.status(201).json( user ))
@@ -66,4 +71,20 @@ const deleteUser = (req: Request, res: Response, next: NextFunction) => {
         .catch((error) => res.status(500).json({ error }));
 };
 
-export default { createUser, readUser, readAll, updateUser, deleteUser };
+const signin = async (req: Request, res: Response, next: NextFunction) => {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email: email });
+    if (!user) {
+      return res.status(404).send("El email no existe");
+    }
+    const validPassword = await user.validatePassword(password);
+    if (!validPassword) {
+      return res.status(401).json({ auth: false, token: null });
+    }
+    const token = jwt.sign({ id: user._id, rol: user.rol}, SIGNATURE, {
+      expiresIn: 60 * 60 * 24,
+    });
+    return res.json({ auth: true, token });
+}
+
+export default { createUser, readUser, readAll, updateUser, deleteUser, signin };
