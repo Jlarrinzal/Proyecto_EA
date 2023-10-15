@@ -3,6 +3,8 @@ import { NextFunction, Response, Request } from 'express';
 import Logging from '../library/Logging';
 import { IUser } from '../models/User';
 import { IProduct } from '../models/Product';
+import { IPurchase } from '../models/Purchase';
+import mongoose from 'mongoose';
 
 export const ValidateSchema = (schema: ObjectSchema) => {
     return async (req: Request, res: Response, next: NextFunction) => {
@@ -36,13 +38,26 @@ export const Schemas = {
             name: Joi.string().required(),
             description: Joi.string().required(),
             price: Joi.number().required(),
-            units: Joi.number().required()
+            units: Joi.number().integer().min(1).required()
         }),
         update: Joi.object<IProduct>({
             name: Joi.string().required(),
             description: Joi.string().required(),
             price: Joi.number().required(),
-            units: Joi.number().required()
+            units: Joi.number().integer().min(1).required()
         })
+    },
+    purchase: {
+        create: Joi.object<IPurchase>({
+            user: Joi.string().required(),
+            product: Joi.string().required(),
+            quantity: Joi.number().integer().min(1).required(),
+        }),
+        update: Joi.object<IPurchase>({
+            user: Joi.string().required(),
+            product: Joi.string().required(),
+            quantity: Joi.number().integer().min(1)
+        }),
+
     }
 };
