@@ -21,5 +21,5 @@ const PurchaseSchema: Schema = new Schema(
         timestamps: true
     }
 );
-
-export default mongoose.model<IPurchaseModel>('Purchase', PurchaseSchema);
+PurchaseSchema.plugin(mongoosePagination);
+export default mongoose.model<IPurchaseModel, Pagination<IPurchaseModel>>('Purchase', PurchaseSchema);

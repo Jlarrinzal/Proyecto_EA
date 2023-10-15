@@ -55,7 +55,7 @@ export const Schemas = {
         update: Joi.object<IPurchase>({
             user: Joi.string().required(),
             product: Joi.string().required(),
-            quantity: Joi.number().integer().min(1).required()
+            quantity: Joi.number().integer().min(1)
         }),
 
     }

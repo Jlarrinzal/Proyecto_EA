@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import mongoose from 'mongoose';
 import Purchase from '../models/Purchase';
+import {mongoosePagination, PaginationOptions } from 'mongoose-paginate-ts';
 
 const createPurchase = (req: Request, res: Response, next: NextFunction) => {
     const { user, product, quantity } = req.body;
@@ -26,9 +27,14 @@ const readPurchase = (req: Request, res: Response, next: NextFunction) => {
         .catch((error) => res.status(500).json({ error }));
 };
 
-const readAll= (req: Request, res: Response, next: NextFunction) => {
-    return Purchase.find()
-        .then((purchases) => res.status(200).json(purchases))
+const readAll = (req: Request, res: Response, next: NextFunction) => {
+    const page = req.query.page ? parseInt(req.query.page as string, 10) : 1; 
+    const options: PaginationOptions = {
+        page,
+        limit: 3
+    };
+    return Purchase.paginate(options)
+        .then((result) => res.status(200).json(result))
         .catch((error) => res.status(500).json({ error }));
 };
 
