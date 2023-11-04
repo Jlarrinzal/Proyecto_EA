@@ -49,13 +49,13 @@ export const Schemas = {
     },
     purchase: {
         create: Joi.object<IPurchase>({
-            user: Joi.string().required(),
-            product: Joi.string().required(),
+            username: Joi.string().required(),
+            name: Joi.string().required(),
             quantity: Joi.number().integer().min(1).required(),
         }),
         update: Joi.object<IPurchase>({
-            user: Joi.string().required(),
-            product: Joi.string().required(),
+            username: Joi.string().required(),
+            name: Joi.string().required(),
             quantity: Joi.number().integer().min(1)
         }),
 

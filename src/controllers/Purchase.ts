@@ -2,21 +2,36 @@ import { NextFunction, Request, Response } from 'express';
 import mongoose from 'mongoose';
 import Purchase from '../models/Purchase';
 import {mongoosePagination, PaginationOptions } from 'mongoose-paginate-ts';
+import Product from '../models/Product';
+import User from '../models/User';
 
-const createPurchase = (req: Request, res: Response, next: NextFunction) => {
-    const { user, product, quantity } = req.body;
+const createPurchase = async (req: Request, res: Response, next: NextFunction) => {
+    const { username, name, quantity } = req.body;
 
+    try {
+        // Check if the user and product exist in the database by name
+        const userExists = await User.findOne({ username:username });
+        const productExists = await Product.findOne({ name:name });
+    
+        if (!userExists || !productExists) {
+          return res.status(404).json({ message: 'User or product not found in the database', 
+          userExists,
+          productExists,
+        });
+        }
+        
     const purchase = new Purchase({
         _id: new mongoose.Types.ObjectId(),
-        user,
-        product,
+        username: userExists.username,
+        name: productExists.name,
         quantity
     });
 
-    return purchase
-        .save()
-        .then((purchase) => res.status(201).json(purchase))
-        .catch((error) => res.status(500).json({ error }));
+    const savedPurchase = await purchase.save();
+    return res.status(201).json(savedPurchase);
+  } catch (error) {
+    return res.status(500).json({ error });
+  }
 };
 
 const readPurchase = (req: Request, res: Response, next: NextFunction) => {
