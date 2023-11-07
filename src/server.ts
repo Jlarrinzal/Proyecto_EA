@@ -10,9 +10,8 @@ import cors from 'cors';
 
 const router = express();
 
-/** Connect to Mongo */
 mongoose
-    .connect(config.mongo.url, { retryWrites: true, w: 'majority' })
+    .connect(config.mongo.url, { retryWrites: true, w: 'majority', serverSelectionTimeoutMS:5000 })
     .then(() => {
         //console.log('connected');  // Se puede hacer sin la libreria para el Logging, es solo más estético
         Logging.info('connected to mongoDB');
