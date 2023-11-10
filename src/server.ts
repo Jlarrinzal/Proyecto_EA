@@ -59,6 +59,5 @@ const StartServer = () => {
             message: error.message
         });
     });
-
     http.createServer(router).listen(config.server.port, () => Logging.info(`Server is running on port ${config.server.port}`));
 };
