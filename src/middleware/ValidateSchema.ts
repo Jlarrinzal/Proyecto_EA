@@ -23,12 +23,14 @@ export const Schemas = {
     user: {
         create: Joi.object<IUser>({
             username: Joi.string().required(),
+            fullname: Joi.string().required(),
             email: Joi.string().required(),
             password: Joi.string().required(),
             rol: Joi.string().required()
         }),
         update: Joi.object<IUser>({
             username: Joi.string().required(),
+            fullname: Joi.string().required(),
             email: Joi.string().required(),
             password: Joi.string().required()
         })

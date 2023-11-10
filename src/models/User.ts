@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 
 export interface IUser {
     username: string;
+    fullname: string;
     email: string;
     password: string;
     rol: string;
@@ -16,6 +17,7 @@ export interface IUserModel extends IUser, Document {}
 const UserSchema: Schema = new Schema(
     {
         username: { type: String, required: true },
+        fullname: { type: String, required: true },
         email: { type: String, required: true },
         password: { type: String, required: true },
         rol: { type: String, required: true }

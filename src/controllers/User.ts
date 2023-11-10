@@ -8,11 +8,12 @@ import dotenv from 'dotenv';
 const SIGNATURE = process.env.SIGNATURE || '';
 
 const createUser = async (req: Request, res: Response, next: NextFunction) => {
-    const { username, email, password, rol } = req.body;
+    const { username, fullname, email, password, rol } = req.body;
 
     const user = new User({
         _id: new mongoose.Types.ObjectId(),
         username,
+        fullname,
         email,
         password,
         rol
