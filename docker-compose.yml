@@ -14,13 +14,27 @@ services:
 
 
   km0-api:
-    build: .
+    # build: .
+    image: antonibote/backend:0.2.1
+    containter_name: km0-api
 
     restart: always
     depends_on:
       - mongoXMK0
     networks:
       - db-tier
+
+
+  km0-backoffice:
+    # build: .
+    image: antonibote/backoffice:0.2.0
+    container_name: km0-backoffice
+
+    restart: always
+    ports:
+      - "9090:80"
+    networks:
+      - app-tier
 
 
 volumes:
@@ -30,5 +44,8 @@ volumes:
 networks:
   db-tier:
     driver: bridge
+  app-tier:
+    driver: bridge
+  
 
 
