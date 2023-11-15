@@ -16,20 +16,17 @@ services:
   km0-api:
     # build: .
     image: antonibote/backend:0.2.1
-    containter_name: km0-api
-
     restart: always
     depends_on:
       - mongoXMK0
     networks:
       - db-tier
+      - app-tier
 
 
   km0-backoffice:
     # build: .
-    image: antonibote/backoffice:0.2.0
-    container_name: km0-backoffice
-
+    image: antonibote/backoffice:0.2.1
     restart: always
     ports:
       - "9090:80"
