@@ -19,6 +19,8 @@ services:
     restart: always
     depends_on:
       - mongoXMK0
+    ports:
+      - "9090:9090"
     networks:
       - db-tier
       - app-tier
@@ -26,10 +28,10 @@ services:
 
   km0-backoffice:
     # build: .
-    image: antonibote/backoffice:0.2.1
+    image: antonibote/backoffice:0.2.2
     restart: always
     ports:
-      - "9090:80"
+      - "8080:80"
     networks:
       - app-tier
 
