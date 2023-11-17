@@ -11,5 +11,7 @@ router.get('/readall', [verifyToken], controller.readAll);
 router.put('/updateuser/:userId', ValidateSchema(Schemas.user.update), controller.updateUser);
 router.delete('/deleteuser/:userId', controller.deleteUser);
 router.post("/signin", controller.signin);
+router.get('/usernameexists/:username', controller.usernameExists);
+router.get('/emailexists/:email', controller.emailExists);
 
 export = router;

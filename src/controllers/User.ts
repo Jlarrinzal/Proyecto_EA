@@ -88,4 +88,28 @@ const signin = async (req: Request, res: Response, next: NextFunction) => {
     return res.json({ auth: true, token });
 }
 
-export default { createUser, readUser, readAll, updateUser, deleteUser, signin };
+const usernameExists = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { username } = req.params;
+        const existingUser = await User.findOne({ username });
+        const usernameExists = existingUser !== null;
+
+        res.status(200).json({ usernameExists });
+    } catch (error) {
+        res.status(500).json({ error });
+    }
+};
+
+const emailExists = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { email } = req.params;
+        const existingUser = await User.findOne({ email });
+        const emailExists = existingUser !== null;
+
+        res.status(200).json({ emailExists });
+    } catch (error) {
+        res.status(500).json({ error });
+    }
+};
+
+export default { createUser, readUser, readAll, updateUser, deleteUser, signin, usernameExists, emailExists };
