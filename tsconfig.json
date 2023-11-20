@@ -8,5 +8,9 @@
       "strict": true,
       "skipLibCheck": true
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
+  "editor.codeActionsOnSave":{
+    "source.fixAll.eslint": true,
+  },
+  "eslint.validate": ["javascript"]
 }
