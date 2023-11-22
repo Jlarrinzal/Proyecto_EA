@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.post('/createproduct', ValidateSchema(Schemas.product.create), controller.createProduct);
 router.get('/readproduct/:productId', controller.readProduct);
-router.get('/readall', [verifyToken], controller.readAll);
+router.get('/readall'/*, [verifyToken]*/, controller.readAll);
 router.put('/updateproduct/:productId', ValidateSchema(Schemas.product.update), controller.updateProduct);
 router.delete('/deleteproduct/:productId', controller.deleteProduct);
 

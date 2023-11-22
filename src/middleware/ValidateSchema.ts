@@ -40,13 +40,15 @@ export const Schemas = {
             name: Joi.string().required(),
             description: Joi.string().required(),
             price: Joi.number().required(),
-            units: Joi.number().integer().min(1).required()
+            units: Joi.number().integer().min(1).required(),
+            user: Joi.string().required()
         }),
         update: Joi.object<IProduct>({
             name: Joi.string().required(),
             description: Joi.string().required(),
             price: Joi.number().required(),
-            units: Joi.number().integer().min(1).required()
+            units: Joi.number().integer().min(1).required(),
+            user: Joi.string().required()
         })
     },
     purchase: {

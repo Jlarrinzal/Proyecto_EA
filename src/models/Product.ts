@@ -6,6 +6,7 @@ export interface IProduct {
     description: string;
     price: number;
     units: number;
+    user: string;
 }
 
 export interface IProductModel extends IProduct, Document {}
@@ -15,7 +16,8 @@ const ProductSchema: Schema = new Schema(
         name: { type: String, required: true },
         description: { type: String, required: true },
         price: { type: Number, required: true },
-        units: { type: Number, required: true }
+        units: { type: Number, required: true },
+        user: { type: String, ref: 'User', required: true },
     },
     {
         versionKey: false

@@ -2,22 +2,35 @@ import { NextFunction, Request, Response } from 'express';
 import mongoose from 'mongoose';
 import Product from '../models/Product';
 import {mongoosePagination, PaginationOptions } from 'mongoose-paginate-ts';
+import User from '../models/User';
 
-const createProduct = (req: Request, res: Response, next: NextFunction) => {
-    const { name, description, price, units } = req.body;
+const createProduct = async (req: Request, res: Response, next: NextFunction) => {
+    const { name, description, price, units, user } = req.body;
+
+    try {
+        
+        const userExists = await User.findById(user);
+
+        if (!userExists) {
+            return res.status(404).json({ message: 'User not found in the database', 
+            userExists,
+          });
+          }
 
     const product = new Product({
         _id: new mongoose.Types.ObjectId(),
+        user: userExists.username,
         name,
         description,
         price,
         units
     });
 
-    return product
-        .save()
-        .then((product) => res.status(201).json(product ))
-        .catch((error) => res.status(500).json({ error }));
+    const newproduct = await product.save();
+    return res.status(201).json(newproduct);
+  } catch (error) {
+    return res.status(500).json({ error });
+  }
 };
 
 const readProduct = (req: Request, res: Response, next: NextFunction) => {
