@@ -76,5 +76,14 @@ const deleteProduct = (req: Request, res: Response, next: NextFunction) => {
         .then((product) => (product ? res.status(201).json({ product, message: 'Deleted' }) : res.status(404).json({ message: 'not found' })))
         .catch((error) => res.status(500).json({ error }));
 };
+const readUserProducts = async (req: Request, res: Response, next: NextFunction) => {
+    const userId = req.params.userId;
 
-export default { createProduct, readProduct, readAll, updateProduct, deleteProduct };
+    try {
+        const products = await Product.find({ user: userId });
+        return res.status(200).json({docs: products});
+    } catch (error) {
+        return res.status(500).json({ error });
+    }
+};
+export default { createProduct, readProduct, readAll, updateProduct, deleteProduct, readUserProducts};
