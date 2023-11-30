@@ -5,8 +5,10 @@ import { config } from './config/config';
 import Logging from './library/Logging';
 import productRoutes from './routes/Product';
 import userRoutes from './routes/User';
-import purchaseRoutes from './routes/Purchase'
-import roomRoutes from './routes/Room'
+import roomRoutes from './routes/Room';
+import purchaseRoutes from './routes/Purchase';
+import favoriteRoutes from './routes/Favorite';
+
 import cors from 'cors';
 import { Server } from 'socket.io';
 
@@ -47,8 +49,9 @@ const StartServer = () => {
     /** Routes */
     router.use('/users', userRoutes);
     router.use('/products', productRoutes);
-    router.use('/purchases', purchaseRoutes)
-    router.use('/rooms', roomRoutes)
+    router.use('/purchases', purchaseRoutes);
+    router.use('/rooms', roomRoutes);
+    router.use('/favorites', favoriteRoutes);
 
     /** Healthcheck */
     router.get('/ping', (req, res, next) => res.status(200).json({ message: 'pong' }));

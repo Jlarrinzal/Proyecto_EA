@@ -8,7 +8,7 @@ const createProduct = async (req: Request, res: Response, next: NextFunction) =>
     const { name, description, price, units, user} = req.body;
 
     try {
-        const userExists = await User.findById(user);
+        const userExists = await User.findOne({email: user});
 
         if (!userExists) {
             return res.status(404).json({ message: 'User not found in the database', userExists });
@@ -26,6 +26,7 @@ const createProduct = async (req: Request, res: Response, next: NextFunction) =>
         const newProduct = await product.save();
         return res.status(201).json(newProduct);
     } catch (error) {
+        console.error
         return res.status(500).json({ error });
     }
 };

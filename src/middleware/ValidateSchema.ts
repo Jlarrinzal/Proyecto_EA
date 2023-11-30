@@ -6,6 +6,7 @@ import { IProduct } from '../models/Product';
 import { IPurchase } from '../models/Purchase';
 import { IRoom } from '../models/Room';
 import mongoose from 'mongoose';
+import { IFavorite } from '../models/Favorite';
 
 export const ValidateSchema = (schema: ObjectSchema) => {
     return async (req: Request, res: Response, next: NextFunction) => {
@@ -73,5 +74,17 @@ export const Schemas = {
             userId2: Joi.string().required(),
         }),
     },
+  
+    favorite: {
+        create: Joi.object<IFavorite>({
+            user: Joi.string().required(),
+            product: Joi.string().required()
+        }),
+        update: Joi.object<IFavorite>({
+            user: Joi.string().required(),
+            product: Joi.string().required()
+            }),
+        },
+
     
 };
