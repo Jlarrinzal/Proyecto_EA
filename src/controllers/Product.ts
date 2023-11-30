@@ -16,7 +16,7 @@ const createProduct = async (req: Request, res: Response, next: NextFunction) =>
 
         const product = new Product({
             _id: new mongoose.Types.ObjectId(),
-            user: userExists,
+            user: userExists._id,
             name,
             description,
             price,
