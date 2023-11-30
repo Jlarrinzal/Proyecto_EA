@@ -4,6 +4,7 @@ import Logging from '../library/Logging';
 import { IUser } from '../models/User';
 import { IProduct } from '../models/Product';
 import { IPurchase } from '../models/Purchase';
+import { IRoom } from '../models/Room';
 import mongoose from 'mongoose';
 import { IFavorite } from '../models/Favorite';
 
@@ -66,6 +67,13 @@ export const Schemas = {
         }),
 
     },
+    room: {
+        create: Joi.object<IRoom>({
+            userId1: Joi.string().required(),
+            userId2: Joi.string().required(),
+        }),
+    },
+  
     favorite: {
         create: Joi.object<IFavorite>({
             user: Joi.string().required(),
@@ -76,5 +84,6 @@ export const Schemas = {
             product: Joi.string().required()
             }),
         },
+
     
 };

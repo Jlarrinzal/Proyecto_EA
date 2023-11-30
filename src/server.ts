@@ -5,8 +5,10 @@ import { config } from './config/config';
 import Logging from './library/Logging';
 import productRoutes from './routes/Product';
 import userRoutes from './routes/User';
+import roomRoutes from './routes/Room';
 import purchaseRoutes from './routes/Purchase';
 import favoriteRoutes from './routes/Favorite';
+
 import cors from 'cors';
 import { Server } from 'socket.io';
 
@@ -47,8 +49,9 @@ const StartServer = () => {
     /** Routes */
     router.use('/users', userRoutes);
     router.use('/products', productRoutes);
-    router.use('/purchases', purchaseRoutes)
-    router.use('/favorites', favoriteRoutes)
+    router.use('/purchases', purchaseRoutes);
+    router.use('/rooms', roomRoutes);
+    router.use('/favorites', favoriteRoutes);
 
     /** Healthcheck */
     router.get('/ping', (req, res, next) => res.status(200).json({ message: 'pong' }));
@@ -69,16 +72,23 @@ const StartServer = () => {
     io.on('connection', (socket) => {
         Logging.info('A user connected');
 
-        socket.on('chat message', (msg) => {
-            Logging.info(`Message: ${msg}`);
-            io.emit('chat message', msg);
+        socket.on('join room', (data) => {
+            const { userId, roomId } = data;
+            socket.join(roomId);
+            Logging.info(`User ${userId} joined room ${roomId}`);
+        });
+
+        socket.on('chat message', (data) => {
+            const { userId, message, roomId } = data;
+            Logging.info(`Message from ${userId} in room ${roomId}: ${message}`);
+
+            io.to(roomId).emit('chat message', { userId, message });
         });
 
         socket.on('disconnect', () => {
             Logging.info('User disconnected');
         });
     });
-
     server.listen(config.server.port, () => {
         Logging.info(`Server is running on port ${config.server.port}`);
     });
