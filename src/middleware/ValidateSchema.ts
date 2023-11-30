@@ -4,6 +4,7 @@ import Logging from '../library/Logging';
 import { IUser } from '../models/User';
 import { IProduct } from '../models/Product';
 import { IPurchase } from '../models/Purchase';
+import { IRoom } from '../models/Room';
 import mongoose from 'mongoose';
 
 export const ValidateSchema = (schema: ObjectSchema) => {
@@ -65,5 +66,12 @@ export const Schemas = {
             quantity: Joi.number().integer().min(1)
         }),
 
-    }
+    },
+    room: {
+        create: Joi.object<IRoom>({
+            userId1: Joi.string().required(),
+            userId2: Joi.string().required(),
+        }),
+    },
+    
 };
