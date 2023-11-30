@@ -35,7 +35,6 @@ export const Schemas = {
             fullname: Joi.string().required(),
             email: Joi.string().required(),
             password: Joi.string().required(),
-            rating: Joi.number().required()
         })
     },
     product: {

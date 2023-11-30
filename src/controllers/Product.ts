@@ -8,7 +8,7 @@ const createProduct = async (req: Request, res: Response, next: NextFunction) =>
     const { name, description, price, units, user} = req.body;
 
     try {
-        const userExists = await User.findOne({email: user});
+        const userExists = await User.findById(user);
 
         if (!userExists) {
             return res.status(404).json({ message: 'User not found in the database', userExists });
