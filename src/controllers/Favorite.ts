@@ -29,7 +29,6 @@ const createFavorite = async (req: Request, res: Response, next: NextFunction) =
     const favorite = new Favorite({
         _id: new mongoose.Types.ObjectId(),
         user: userExists._id,
-        username: userExists.username,
         product: productExists._id
     });
 
@@ -110,9 +109,21 @@ const readUserFavorites = async (req: Request, res: Response, next: NextFunction
         return res.status(500).json({ error });
     }
 };
+const checkIfUserHasFavorite = async (req: Request, res: Response, next: NextFunction) => {
+    const { userId, productId } = req.params;
 
+    try {
+        // Verificar si existe un favorito con el usuario y el producto dados
+        const favorito = await Favorite.findOne({ user: userId, product: productId });
 
+        if (favorito) {
+            return res.status(200).json({ exists: true, favoriteId: favorito._id });
+        } else {
+            return res.status(200).json({ exists: false, favoriteId: null });
+        }
+    } catch (error) {
+        return res.status(500).json({ error });
+    }
+};
 
-
-
-export default { createFavorite, readFavorite, readAll, updateFavorite, deleteFavorite, readUserFavorites};
+export default { createFavorite, readFavorite, readAll, updateFavorite, deleteFavorite, readUserFavorites, checkIfUserHasFavorite};

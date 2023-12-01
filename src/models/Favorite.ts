@@ -6,9 +6,6 @@ import Product from './Product';
 export interface IFavorite {
     user: string;
     product: string;  
-    username: string;
-    
-
 }
 
 export interface IFavoriteModel extends IFavorite, Document {}
@@ -17,7 +14,6 @@ const FavoriteSchema: Schema = new Schema(
     {
         user: { type: String, ref: 'User', required: true },
         product: { type: String, ref: 'Product', required: true },
-        username: { type: String}
     },
     {
         versionKey: false,
