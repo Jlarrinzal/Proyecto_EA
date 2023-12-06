@@ -4,7 +4,9 @@ import Logging from '../library/Logging';
 import { IUser } from '../models/User';
 import { IProduct } from '../models/Product';
 import { IPurchase } from '../models/Purchase';
+import { IRoom } from '../models/Room';
 import mongoose from 'mongoose';
+import { IFavorite } from '../models/Favorite';
 
 export const ValidateSchema = (schema: ObjectSchema) => {
     return async (req: Request, res: Response, next: NextFunction) => {
@@ -35,8 +37,6 @@ export const Schemas = {
             fullname: Joi.string().required(),
             email: Joi.string().required(),
             password: Joi.string().required(),
-            rating: Joi.number().required(),
-            profileImage: Joi.string().required(),
         })
     },
     product: {
@@ -69,5 +69,24 @@ export const Schemas = {
             quantity: Joi.number().integer().min(1)
         }),
 
-    }
+    },
+    room: {
+        create: Joi.object<IRoom>({
+            userId1: Joi.string().required(),
+            userId2: Joi.string().required(),
+        }),
+    },
+  
+    favorite: {
+        create: Joi.object<IFavorite>({
+            user: Joi.string().required(),
+            product: Joi.string().required()
+        }),
+        update: Joi.object<IFavorite>({
+            user: Joi.string().required(),
+            product: Joi.string().required()
+            }),
+        },
+
+    
 };
