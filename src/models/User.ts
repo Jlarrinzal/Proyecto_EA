@@ -9,6 +9,7 @@ export interface IUser {
     password: string;
     rol: string;
     rating: number;
+    profileImage: string;
     encryptPassword(password: string): Promise<string>;
     validatePassword(password: string): Promise<boolean>;
 }
@@ -22,7 +23,8 @@ const UserSchema: Schema = new Schema(
         email: { type: String, required: true },
         password: { type: String, required: true },
         rol: { type: String, required: true },
-        rating: { type: Number, required: true }
+        rating: { type: Number, required: true },
+        profileImage: { type: String, required: true },
     },
     {
         versionKey: false

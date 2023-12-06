@@ -8,7 +8,7 @@ import dotenv from 'dotenv';
 const SIGNATURE = process.env.SIGNATURE || '';
 
 const createUser = async (req: Request, res: Response, next: NextFunction) => {
-    const { username, fullname, email, password, rol, rating } = req.body;
+    const { username, fullname, email, password, rol, rating, profileImage } = req.body;
 
     const user = new User({
         _id: new mongoose.Types.ObjectId(),
@@ -17,7 +17,8 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
         email,
         password,
         rol,
-        rating
+        rating,
+        profileImage
     });
 
     user.password = await user.encryptPassword(user.password);
