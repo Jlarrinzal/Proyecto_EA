@@ -29,7 +29,8 @@ export const Schemas = {
             email: Joi.string().required(),
             password: Joi.string().required(),
             rol: Joi.string().required(),
-            rating: Joi.number().required()
+            rating: Joi.number().required(),
+            profileImage: Joi.string().required(),
         }),
         update: Joi.object<IUser>({
             username: Joi.string().required(),
@@ -45,6 +46,7 @@ export const Schemas = {
             price: Joi.number().required(),
             units: Joi.number().integer().min(1).required(),
             user: Joi.string().required(),
+            productImage: Joi.string().required(),
         }),
         update: Joi.object<IProduct>({
             name: Joi.string().required(),
@@ -52,6 +54,7 @@ export const Schemas = {
             price: Joi.number().required(),
             units: Joi.number().integer().min(1).required(),
             user: Joi.string().required(),
+            productImage: Joi.string().required(),
         })
     },
     purchase: {
