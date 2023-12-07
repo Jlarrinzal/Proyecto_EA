@@ -1,5 +1,5 @@
 import mongoose, { Document, Schema } from 'mongoose';
-import {mongoosePagination, Pagination} from 'mongoose-paginate-ts';
+import { mongoosePagination, Pagination } from 'mongoose-paginate-ts';
 
 export interface IProduct {
     name: string;
@@ -7,7 +7,7 @@ export interface IProduct {
     price: number;
     units: number;
     user: string;
-    productImage: string;
+    productImage: string[];  // Cambiado a un array de strings
 }
 
 export interface IProductModel extends IProduct, Document {}
@@ -19,8 +19,7 @@ const ProductSchema: Schema = new Schema(
         price: { type: Number, required: true },
         units: { type: Number, required: true },
         user: { type: String, ref: 'User', required: true },
-        productImage: { type: String, required: true },
-
+        productImage: { type: [String], required: true },  // Cambiado a un array de strings
     },
     {
         versionKey: false
