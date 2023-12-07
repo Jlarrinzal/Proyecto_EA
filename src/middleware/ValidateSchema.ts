@@ -47,6 +47,10 @@ export const Schemas = {
             units: Joi.number().integer().min(1).required(),
             user: Joi.string().required(),
             productImage: Joi.string().required(),
+            location: Joi.object({
+                latitude: Joi.number(),
+                longitude: Joi.number(),
+            }).optional(),
         }),
         update: Joi.object<IProduct>({
             name: Joi.string().required(),
@@ -55,6 +59,10 @@ export const Schemas = {
             units: Joi.number().integer().min(1).required(),
             user: Joi.string().required(),
             productImage: Joi.string().required(),
+            location: Joi.object({
+                latitude: Joi.number(),
+                longitude: Joi.number(),
+            }).optional(),
         })
     },
     purchase: {
