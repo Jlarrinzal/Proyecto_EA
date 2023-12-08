@@ -24,7 +24,7 @@ const UserSchema: Schema = new Schema(
         password: { type: String, required: true },
         rol: { type: String, required: true },
         rating: { type: Number, required: true },
-        profileImage: { type: String, required: true },
+        profileImage: { type: String, required: false },
     },
     {
         versionKey: false

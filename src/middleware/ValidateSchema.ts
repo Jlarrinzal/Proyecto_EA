@@ -30,7 +30,7 @@ export const Schemas = {
             password: Joi.string().required(),
             rol: Joi.string().required(),
             rating: Joi.number().required(),
-            profileImage: Joi.string().required(),
+            profileImage: Joi.string().allow('').required(),
         }),
         update: Joi.object<IUser>({
             username: Joi.string().required(),
