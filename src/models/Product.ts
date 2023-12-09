@@ -1,13 +1,19 @@
 import mongoose, { Document, Schema } from 'mongoose';
 import { mongoosePagination, Pagination } from 'mongoose-paginate-ts';
 
+export interface ILocation {
+    type: string;
+    coordinates: [number, number]; 
+}
+
 export interface IProduct {
     name: string;
     description: string;
     price: number;
     units: number;
     user: string;
-    productImage: string[];  // Cambiado a un array de strings
+    productImage: string[];
+    location?: ILocation;
 }
 
 export interface IProductModel extends IProduct, Document {}
@@ -19,7 +25,11 @@ const ProductSchema: Schema = new Schema(
         price: { type: Number, required: true },
         units: { type: Number, required: true },
         user: { type: String, ref: 'User', required: true },
-        productImage: { type: [String], required: true },  // Cambiado a un array de strings
+        productImage: { type: [String], required: true },
+        location: {
+            latitude: { type: Number, default: 0 },
+            longitude: { type: Number, default: 0 },
+        },
     },
     {
         versionKey: false
