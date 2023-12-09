@@ -1,5 +1,5 @@
 import mongoose, { Document, Schema } from 'mongoose';
-import {mongoosePagination, Pagination} from 'mongoose-paginate-ts';
+import { mongoosePagination, Pagination } from 'mongoose-paginate-ts';
 
 export interface ILocation {
     type: string;
@@ -12,7 +12,7 @@ export interface IProduct {
     price: number;
     units: number;
     user: string;
-    productImage: string;
+    productImage: string[];
     location?: ILocation;
 }
 
@@ -25,7 +25,7 @@ const ProductSchema: Schema = new Schema(
         price: { type: Number, required: true },
         units: { type: Number, required: true },
         user: { type: String, ref: 'User', required: true },
-        productImage: { type: String, required: true },
+        productImage: { type: [String], required: true },
         location: {
             latitude: { type: Number, default: 0 },
             longitude: { type: Number, default: 0 },

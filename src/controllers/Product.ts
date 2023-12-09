@@ -14,6 +14,9 @@ const createProduct = async (req: Request, res: Response, next: NextFunction) =>
             return res.status(404).json({ message: 'User not found in the database', userExists });
         }
 
+        // Asegúrate de que productImage sea un array de strings
+        const productImagesArray = Array.isArray(productImage) ? productImage : [productImage];
+
         const product = new Product({
             _id: new mongoose.Types.ObjectId(),
             user: userExists._id,
@@ -21,14 +24,14 @@ const createProduct = async (req: Request, res: Response, next: NextFunction) =>
             description,
             price,
             units,
-            productImage,
+            productImage: productImagesArray, // Asigna el array de strings
             location,
         });
 
         const newProduct = await product.save();
         return res.status(201).json(newProduct);
     } catch (error) {
-        console.error
+        console.error(error);
         return res.status(500).json({ error });
     }
 };
@@ -45,7 +48,7 @@ const readAll = (req: Request, res: Response, next: NextFunction) => {
     const page = req.query.page ? parseInt(req.query.page as string, 10) : 1; 
     const options: PaginationOptions = {
         page,
-        limit: 3
+        limit: 8
     };
     return Product.paginate(options)
         .then((result) => res.status(200).json(result))

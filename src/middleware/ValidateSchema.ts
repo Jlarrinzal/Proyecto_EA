@@ -7,6 +7,7 @@ import { IPurchase } from '../models/Purchase';
 import { IRoom } from '../models/Room';
 import mongoose from 'mongoose';
 import { IFavorite } from '../models/Favorite';
+import { IRating } from '../models/Rating';
 
 export const ValidateSchema = (schema: ObjectSchema) => {
     return async (req: Request, res: Response, next: NextFunction) => {
@@ -30,7 +31,7 @@ export const Schemas = {
             password: Joi.string().required(),
             rol: Joi.string().required(),
             rating: Joi.number().required(),
-            profileImage: Joi.string().required(),
+            profileImage: Joi.string().allow('').required(),
         }),
         update: Joi.object<IUser>({
             username: Joi.string().required(),
@@ -46,7 +47,7 @@ export const Schemas = {
             price: Joi.number().required(),
             units: Joi.number().integer().min(1).required(),
             user: Joi.string().required(),
-            productImage: Joi.string().required(),
+            productImage: Joi.array().items(Joi.string()).required(),
             location: Joi.object({
                 latitude: Joi.number(),
                 longitude: Joi.number(),
@@ -58,7 +59,7 @@ export const Schemas = {
             price: Joi.number().required(),
             units: Joi.number().integer().min(1).required(),
             user: Joi.string().required(),
-            productImage: Joi.string().required(),
+            productImage: Joi.array().items(Joi.string()).required(),
             location: Joi.object({
                 latitude: Joi.number(),
                 longitude: Joi.number(),
@@ -95,6 +96,19 @@ export const Schemas = {
             product: Joi.string().required()
             }),
         },
-
+        rating: {
+            create: Joi.object<IRating>({
+                userId1: Joi.string().required(),
+                userId2: Joi.string().required(),
+                rating: Joi.number().required(),
+                comment: Joi.string().required(),
+            }),
+            update: Joi.object<IRating>({
+                userId1: Joi.string().required(),
+                userId2: Joi.string().required(),
+                rating: Joi.number().required(),
+                comment: Joi.string().required(),
+            }),
+        },
     
 };
