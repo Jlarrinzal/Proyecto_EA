@@ -7,6 +7,7 @@ import { IPurchase } from '../models/Purchase';
 import { IRoom } from '../models/Room';
 import mongoose from 'mongoose';
 import { IFavorite } from '../models/Favorite';
+import { IRating } from '../models/Rating';
 
 export const ValidateSchema = (schema: ObjectSchema) => {
     return async (req: Request, res: Response, next: NextFunction) => {
@@ -87,6 +88,19 @@ export const Schemas = {
             product: Joi.string().required()
             }),
         },
-
+        rating: {
+            create: Joi.object<IRating>({
+                userId1: Joi.string().required(),
+                userId2: Joi.string().required(),
+                rating: Joi.number().required(),
+                comment: Joi.string().required(),
+            }),
+            update: Joi.object<IRating>({
+                userId1: Joi.string().required(),
+                userId2: Joi.string().required(),
+                rating: Joi.number().required(),
+                comment: Joi.string().required(),
+            }),
+        },
     
 };
