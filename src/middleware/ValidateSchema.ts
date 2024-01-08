@@ -59,7 +59,7 @@ export const Schemas = {
             price: Joi.number().required(),
             units: Joi.number().integer().min(1).required(),
             user: Joi.string().required(),
-            productImage: Joi.array().items(Joi.string()).required(),
+            productImage: Joi.array().items(Joi.string()),
             location: Joi.object({
                 latitude: Joi.number(),
                 longitude: Joi.number(),
