@@ -9,6 +9,8 @@ import roomRoutes from './routes/Room';
 import purchaseRoutes from './routes/Purchase';
 import favoriteRoutes from './routes/Favorite';
 import ratingRoutes from './routes/Rating';
+import recipeRoutes from './routes/Recipe';
+
 
 import cors from 'cors';
 import { Server } from 'socket.io';
@@ -54,6 +56,8 @@ const StartServer = () => {
     router.use('/rooms', roomRoutes);
     router.use('/favorites', favoriteRoutes);
     router.use('/ratings', ratingRoutes);
+    router.use('/recipes', recipeRoutes);
+
 
     /** Healthcheck */
     router.get('/ping', (req, res, next) => res.status(200).json({ message: 'pong' }));
