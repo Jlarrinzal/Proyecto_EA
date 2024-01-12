@@ -5,6 +5,8 @@ export interface IRecipe {
     userId: string;
     product: string;
     recipe: string;
+    recipeURL: string;
+    title: String;
 }
 
 export interface IRecipeModel extends IRecipe, Document {}
@@ -14,6 +16,8 @@ const RecipeSchema: Schema = new Schema(
         userId: { type: String, ref: 'User', required: true },
         product: { type: String, required: true },
         recipe: { type: String, required: true },
+        recipeURL: { type: String, required: true },
+        title: { type: String, required: true },
     },
     {
         versionKey: false

@@ -5,7 +5,7 @@ import {mongoosePagination, PaginationOptions } from 'mongoose-paginate-ts';
 import User from '../models/User';
 
 const createRecipe = async (req: Request, res: Response, next: NextFunction) => {
-    const { userId, product, recipe} = req.body;
+    const { userId, product, recipe, recipeURL, title} = req.body;
 
     try {
         const userExists = await User.findById(userId);
@@ -19,6 +19,8 @@ const createRecipe = async (req: Request, res: Response, next: NextFunction) => 
             userId: userExists._id,
             product,
             recipe,
+            recipeURL,
+            title,
         });
 
         const newRecipe = await recipes.save();
@@ -40,4 +42,15 @@ const readAll = (req: Request, res: Response, next: NextFunction) => {
         .catch((error) => res.status(500).json({ error }));
 };
 
-export default { createRecipe, readAll};
+const readUserRecipes = async (req: Request, res: Response, next: NextFunction) => {
+    const userId = req.params.userId;
+
+    try {
+        const recipes = await Recipes.find({ userId: userId });
+        return res.status(200).json({docs: recipes});
+    } catch (error) {
+        return res.status(500).json({ error });
+    }
+};
+
+export default { createRecipe, readAll, readUserRecipes};

@@ -7,5 +7,6 @@ const router = express.Router();
 
 router.post('/createrecipe', /*ValidateSchema(Schemas.recipes.create)*/ controller.createRecipe);
 router.get('/readall'/*, [verifyToken]*/, controller.readAll);
+router.get('/readuserrecipe/:userId', controller.readUserRecipes);
 
 export = router;
