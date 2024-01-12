@@ -11,5 +11,6 @@ router.get('/readallratings', [verifyToken], controller.readAllRatings);
 router.put('/updaterating/:ratingId', ValidateSchema(Schemas.rating.update), controller.updateRating);
 router.delete('/deleterating/:ratingId', controller.deleteRating);
 router.put('/updateaveragerating/:userId', controller.updateAverageRating);
+router.get('/readuserratings/:userId', controller.readUserRatings)
 
 export = router;
