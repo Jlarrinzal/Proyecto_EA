@@ -14,6 +14,7 @@ export interface IProduct {
     user: string;
     productImage: string[];
     location?: ILocation;
+    date: Date;
 }
 
 export interface IProductModel extends IProduct, Document {}
@@ -30,6 +31,7 @@ const ProductSchema: Schema = new Schema(
             latitude: { type: Number, default: 0 },
             longitude: { type: Number, default: 0 },
         },
+        date: { type: Date, default: Date.now },
     },
     {
         versionKey: false

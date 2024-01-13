@@ -11,5 +11,7 @@ router.get('/readall'/*, [verifyToken]*/, controller.readAll);
 router.put('/updateproduct/:productId', ValidateSchema(Schemas.product.update), controller.updateProduct);
 router.delete('/deleteproduct/:productId', controller.deleteProduct);
 router.get('/readuserproducts/:userId', controller.readUserProducts);
+router.get('/readuserproductsoferta', controller.readUserProductsOferta);
+
 
 export = router;

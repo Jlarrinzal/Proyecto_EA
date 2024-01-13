@@ -52,6 +52,7 @@ export const Schemas = {
                 latitude: Joi.number(),
                 longitude: Joi.number(),
             }).optional(),
+            date: Joi.date().required(),
         }),
         update: Joi.object<IProduct>({
             name: Joi.string().required(),
@@ -64,6 +65,7 @@ export const Schemas = {
                 latitude: Joi.number(),
                 longitude: Joi.number(),
             }).optional(),
+            date: Joi.date().optional(),
         })
     },
     purchase: {
