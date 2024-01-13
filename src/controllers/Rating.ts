@@ -102,20 +102,18 @@ const updateAverageRating = async (req: Request, res: Response, next: NextFuncti
 };
 
 const readUserRatings = async (req: Request, res: Response, next: NextFunction) => {
-    const userId2 = req.params.userId2; 
+    const userId = req.params.userId;
 
     try {
-        const userRatings = await Rating.find({ user: userId2}).exec();
+        const ratings = await Rating.find({ userId2: userId });
 
-        if (!userRatings || userRatings.length === 0) {
-            return res.status(404).json({ message: 'No favorites found for the user' });
+        if (ratings.length > 0) {
+            return res.status(200).json({docs: ratings});
+        } else {
+            return res.status(404).json({ message: 'No ratings found for the specified userId' });
         }
-
-        // Mapea los resultados para obtener una lista de productos
-        
-
-        return res.status(200).json({docs: userRatings});
     } catch (error) {
+        console.error(error);
         return res.status(500).json({ error });
     }
 };
