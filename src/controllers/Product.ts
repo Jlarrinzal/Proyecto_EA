@@ -5,7 +5,7 @@ import {mongoosePagination, PaginationOptions } from 'mongoose-paginate-ts';
 import User from '../models/User';
 
 const createProduct = async (req: Request, res: Response, next: NextFunction) => {
-    const { name, description, price, units, user, productImage, location} = req.body;
+    const { name, description, price, units, user, productImage, location, date} = req.body;
 
     try {
         const userExists = await User.findById(user);
@@ -26,6 +26,7 @@ const createProduct = async (req: Request, res: Response, next: NextFunction) =>
             units,
             productImage: productImagesArray, // Asigna el array de strings
             location,
+            date,
         });
 
         const newProduct = await product.save();
@@ -91,4 +92,22 @@ const readUserProducts = async (req: Request, res: Response, next: NextFunction)
         return res.status(500).json({ error });
     }
 };
-export default { createProduct, readProduct, readAll, updateProduct, deleteProduct, readUserProducts};
+
+const readUserProductsOferta = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const today = new Date();
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        const products = await Product.find({
+            date: {
+                $gte: today, // Mayor o igual que la fecha actual
+                $lte: tomorrow, // Menor o igual que el final del día siguiente
+            },
+        });
+
+        return res.status(200).json({ docs: products });
+    } catch (error) {
+        return res.status(500).json({ error });
+    }
+};
+export default { createProduct, readProduct, readAll, updateProduct, deleteProduct, readUserProducts, readUserProductsOferta};
