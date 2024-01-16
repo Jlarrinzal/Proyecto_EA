@@ -11,5 +11,6 @@ router.put('/updatefavorite/:favoriteId', ValidateSchema(Schemas.favorite.update
 router.delete('/deletefavorite/:favoriteId', controller.deleteFavorite);
 router.get('/readuserfavorites/:userId', controller.readUserFavorites);
 router.get('/favoriteexist/:userId/:productId', controller.checkIfUserHasFavorite);
+router.get('/countfavorites/:productId', controller.getProductFavoritesCount);
 
 export = router;

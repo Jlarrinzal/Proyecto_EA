@@ -126,4 +126,16 @@ const checkIfUserHasFavorite = async (req: Request, res: Response, next: NextFun
     }
 };
 
-export default { createFavorite, readFavorite, readAll, updateFavorite, deleteFavorite, readUserFavorites, checkIfUserHasFavorite};
+const getProductFavoritesCount = async (req: Request, res: Response, next: NextFunction) => {
+    const productId = req.params.productId;
+
+    try {
+        // Count the number of favorites for the given product ID
+        const favoritesCount = await Favorite.countDocuments({ product: productId });
+
+        return res.status(200).json({ favoritesCount: favoritesCount.toString() });    } catch (error) {
+        return res.status(500).json({ error });
+    }
+};
+
+export default { createFavorite, readFavorite, readAll, updateFavorite, deleteFavorite, readUserFavorites, checkIfUserHasFavorite, getProductFavoritesCount};
