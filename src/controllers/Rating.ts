@@ -117,4 +117,18 @@ const readUserRatings = async (req: Request, res: Response, next: NextFunction) 
         return res.status(500).json({ error });
     }
 };
-export default { createRating, readRating, readAllRatings, updateRating, deleteRating, updateAverageRating, readUserRatings};
+
+const getUserRatingsCount = async (req: Request, res: Response, next: NextFunction) => {
+    const userId = req.params.userId;
+
+    try {
+        // Count the number of favorites for the given product ID
+        const ratingsCount = await Rating.countDocuments({ userId2: userId });
+
+        return res.status(200).json({ ratingsCount: ratingsCount.toString() });    } catch (error) {
+        return res.status(500).json({ error });
+    }
+};
+
+
+export default { createRating, readRating, readAllRatings, updateRating, deleteRating, updateAverageRating, readUserRatings, getUserRatingsCount};
