@@ -1,3 +1,4 @@
+import { boolean } from 'joi';
 import mongoose, { Document, Schema } from 'mongoose';
 import { mongoosePagination, Pagination } from 'mongoose-paginate-ts';
 
@@ -15,6 +16,7 @@ export interface IProduct {
     productImage: string[];
     location?: ILocation;
     date: Date;
+    sold: Boolean;
 }
 
 export interface IProductModel extends IProduct, Document {}
@@ -32,6 +34,7 @@ const ProductSchema: Schema = new Schema(
             longitude: { type: Number, default: 0 },
         },
         date: { type: Date, default: Date.now },
+        sold: {type: Boolean, default: false}
     },
     {
         versionKey: false

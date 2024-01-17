@@ -5,7 +5,7 @@ import {mongoosePagination, PaginationOptions } from 'mongoose-paginate-ts';
 import User from '../models/User';
 
 const createProduct = async (req: Request, res: Response, next: NextFunction) => {
-    const { name, description, price, units, user, productImage, location, date} = req.body;
+    const { name, description, price, units, user, productImage, location, date, sold} = req.body;
 
     try {
         const userExists = await User.findById(user);
@@ -27,6 +27,7 @@ const createProduct = async (req: Request, res: Response, next: NextFunction) =>
             productImage: productImagesArray, // Asigna el array de strings
             location,
             date,
+            sold,
         });
 
         const newProduct = await product.save();
