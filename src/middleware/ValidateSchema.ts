@@ -38,6 +38,8 @@ export const Schemas = {
             fullname: Joi.string().required(),
             email: Joi.string().required(),
             password: Joi.string().required(),
+            profileImage: Joi.string().allow('').required(),
+
         })
     },
     product: {
